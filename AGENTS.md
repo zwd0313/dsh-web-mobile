@@ -37,7 +37,7 @@
   │  ├─ css-structure-check.mjs ← CSS 结构检测器（已接入 test:core）
   │  ├─ patch-registry-check.mjs ← 补丁登记门禁：@patch 四要素（for/why/until/test）+ 表↔码双向一致（已接入 test:core）
   │  ├─ lib/                 ← 探针共用模块（错误基线匹配、CDP 客户端、宿主场景、判定）
-  │  └─ probes/              ← 22 个回归锚点（builtin-only，可单跑）
+  │  └─ probes/              ← 23 个回归锚点（builtin-only，可单跑）
   ├─ tests/                  ← 65 个 .test.ts（node --test，type-stripping 直跑）
   ├─ docs/
   │  ├─ specs/               ← 10 篇权威设计文档（入库）

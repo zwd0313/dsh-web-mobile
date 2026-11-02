@@ -46,6 +46,24 @@
   目录），否则 ProcessSingleton 建 socket 失败、CDP 端口永不上线。完整命令与 cookie TTL →
   `docs/maintenance/pitfalls.md` §探针运行环境。
 
+## 页头表面离线回归（无需活宿主）
+
+```sh
+# Node >=24；系统已安装 Chromium 时可省略 DSH_PROBE_CHROME（默认 chromium）
+DSH_PROBE_CHROME=/path/to/chrome node scripts/probes/header-surface-probe.mjs
+```
+
+该探针只启动一个临时 headless 浏览器，读取 `styles/index.ts` 的完整四层 `MOBILE_CSS`，
+在 about:blank 的合成结构中逐场景重建文档，不连接 DSH、读取 cookie 或变更本机 profile。
+覆盖旧/新 CSS Module 前缀、无 class 包裹层、多 class token/尾随空格、浅/深色与壁纸、
+隐藏页头、360/390/767/768/1023/1024 触屏及窄/宽鼠标窗口。断言计算样式、正文滚动后
+页头/菜单/遮罩命中顺序、选区让位及恢复、重命名输入可选、同 phase 下提问卡负对照的 h2 非零高度与选择样式、
+页头负 margin 与 flow padding 补偿；非移动档与无插件 CSS 逐项比较。
+另带固定前缀、缺失抬层、裸 header 三个变异对照：必须重现透明/穿透或提问卡误伤，避免探针假绿。
+退出时只回收本次启动的 PID 与临时目录；缺浏览器、CDP 超时或断言失败均非零退出。
+这是 #258 后的浏览器 CSS 回归补强，不是新修复；不运行插件 JS、不覆盖真实宿主生命周期，
+**不替代真实 profile、iOS WebKit 或真机验收（待真机验收）**，也未接入 `test:core`/CI。
+
 ## 真机读数通道（2026-09-14）
 
 `?mobile-nav-debug=1` 除页面徽章外，还把同一份读数 POST 到本机监听器（默认
